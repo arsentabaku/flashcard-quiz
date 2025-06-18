@@ -1,47 +1,46 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+	let question = '32';
+	let correct = 'ew';
+	let wrongs = ['tree', 'tree', 'tree'];
+
+	async function submit() {
+		const response = await fetch('http://localhost:8000/flashcards', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				question,
+				correct_answer: correct,
+				wrong_answers: wrongs
+			})
+		});
+
+		if (response.ok) {
+			alert("Congrats! Flashcard added :)");
+			question = '';
+			correct = '';
+			wrongs = ['', '', ''];
+		} else {
+			alert("Faced an error while adding flashcard :(");
+		}
+	}
 </script>
 
-<main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+<div class="max-w-md mx-auto p-6 bg-white rounded shadow mt-10">
+	<h1 class="text-2xl font-bold mb-4">Add a Flashcard</h1>
 
-  <div class="card">
-    <Counter />
-  </div>
+	<input bind:value={question} placeholder="Question"
+		class="w-full p-2 border mb-2 rounded" />
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
+	<input bind:value={correct} placeholder="Correct Answer"
+		class="w-full p-2 border mb-2 rounded" />
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+	{#each wrongs as wrong, i}
+		<input bind:value={wrongs[i]} placeholder="Wrong Answer"
+			class="w-full p-2 border mb-2 rounded" />
+	{/each}
 
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
+	<button on:click={submit}
+		class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+		Add Card
+	</button>
+</div>

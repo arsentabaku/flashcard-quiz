@@ -24,7 +24,7 @@
     current++;
 
     if (current >= cards.length) {
-      // TODO: Redirect to the result page
+      window.location.href = "#/result?score=" + score;
     }
   }
 

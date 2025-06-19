@@ -13,12 +13,26 @@
   });
 </script>
 
-<div class="max-w-md mx-auto text-center p-10 bg-white rounded shadow mt-10">
-  <h1 class="text-2xl font-bold mb-4">Quiz Finished! 🎉</h1>
-  <p class="text-lg">Your score: <strong>{score}</strong> / {total}</p>
+<div
+  class="max-w-lg mx-auto mt-20 p-10 bg-white rounded-3xl shadow-xl text-center text-black"
+>
+  <h1 class="text-3xl font-bold mb-6">🎉 Quiz Completed!</h1>
+
+  <p class="text-xl mb-4">
+    Your Score:
+    <strong class="text-blue-600">{score}</strong>
+    <span class="text-gray-600">/</span>
+    <strong>{total}</strong>
+  </p>
+
+  <p class="text-gray-700 mb-6">
+    Great job! You can play again or add new flashcards to test your knowledge.
+  </p>
+
   <a
-    href="/Quiz"
-    class="mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded"
-    >Play Again</a
+    href="#/quiz"
+    class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition"
   >
+    🔁 Play Again
+  </a>
 </div>

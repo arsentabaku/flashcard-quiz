@@ -7,7 +7,6 @@
   let cards = [];
   let current = 0;
   let score = 0;
-
   let selected = "";
   let showFeedback = false;
   /**
@@ -31,20 +30,14 @@
   }
 
   /**
-   * @param {any} answer
+   * @param {string} answer
    */
   function selectAnswer(answer) {
-    if (showFeedback) {
-      return;
-    }
+    if (showFeedback) return;
 
     selected = answer;
     isCorrect = answer === cards[current].correct_answer;
-
-    if (isCorrect) {
-      score++;
-    }
-
+    if (isCorrect) score++;
     showFeedback = true;
   }
 
@@ -61,49 +54,54 @@
 </script>
 
 {#if cards.length > 0 && current < cards.length}
-  <div class="max-w-xl mx-auto p-6 bg-white rounded shadow mt-10">
-    <h2 class="text-xl font-bold mb-4">
-      Question {current + 1} of {cards.length}
+  <div
+    class="max-w-2xl mx-auto p-8 text-black rounded-3xl shadow-2xl mt-12 bg-white"
+  >
+    <h2 class="text-2xl font-bold mb-6 text-center">
+      🧠 Question {current + 1} of {cards.length}
     </h2>
-    <p class="mb-4">{cards[current].question}</p>
 
-    {#each shuffle( [cards[current].correct_answer, ...cards[current].wrong_answers] ) as answer}
-      <button
-        class="block w-full text-left px-4 py-2 my-1 rounded border transition
-					{selected === answer && showFeedback && isCorrect
-          ? 'bg-green-200 border-green-500'
-          : ''}
-					{selected === answer && showFeedback && !isCorrect
-          ? 'bg-red-200 border-red-500'
-          : ''}
-					{selected !== answer && showFeedback
-          ? 'opacity-50 cursor-not-allowed'
-          : 'bg-white hover:bg-blue-50'}"
-        disabled={showFeedback}
-        on:click={() => selectAnswer(answer)}
-      >
-        {answer}
-      </button>
-    {/each}
+    <p class="text-lg mb-6 text-center">{cards[current].question}</p>
+
+    <div class="space-y-3">
+      {#each shuffle( [cards[current].correct_answer, ...cards[current].wrong_answers] ) as answer}
+        <button
+          class="block w-full text-left px-5 py-3 rounded-xl border-2 transition font-medium
+            {selected === answer && showFeedback && isCorrect
+            ? 'bg-green-100 border-green-500'
+            : ''}
+            {selected === answer && showFeedback && !isCorrect
+            ? 'bg-red-100 border-red-500'
+            : ''}
+            {selected !== answer && showFeedback
+            ? 'bg-gray-100 border-gray-400 cursor-not-allowed'
+            : 'bg-gray-50 border-gray-300 hover:border-blue-500'}"
+          disabled={showFeedback}
+          on:click={() => selectAnswer(answer)}
+        >
+          {answer}
+        </button>
+      {/each}
+    </div>
 
     {#if showFeedback}
-      <div class="mt-4">
-        <p class="mb-2 font-semibold">
+      <div class="mt-6 text-center">
+        <p class="mb-4 text-lg font-semibold">
           {isCorrect
             ? "✅ Correct!"
-            : `❌ Wrong. Correct answer: ${cards[current].correct_answer}`}
+            : `❌ Oops! The correct answer was: ${cards[current].correct_answer}`}
         </p>
         <button
-          class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-xl transition"
           on:click={next}
         >
-          Next
+          Next Question →
         </button>
       </div>
     {/if}
   </div>
 {:else if cards.length === 0}
-  <div class="text-center mt-20">
+  <div class="text-center mt-20 text-gray-600 text-lg">
     <p>No flashcards found. Please add some first.</p>
   </div>
 {/if}

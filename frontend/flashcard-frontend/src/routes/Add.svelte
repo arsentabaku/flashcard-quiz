@@ -15,43 +15,47 @@
     });
 
     if (response.ok) {
-      alert("Congrats! Flashcard added :)");
+      alert("✅ Flashcard added!");
       question = "";
       correct = "";
       wrongs = ["", "", ""];
     } else {
-      alert("Faced an error while adding flashcard :(");
+      alert("❌ Failed to add flashcard.");
     }
   }
 </script>
 
-<div class="max-w-md mx-auto p-6 bg-white rounded shadow mt-10">
-  <h1 class="text-2xl font-bold mb-4">Add a Flashcard</h1>
+<div class="max-w-xl mx-auto p-8  rounded-3xl shadow-2xl mt-12">
+  <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
+    📝 Add a Flashcard
+  </h1>
 
-  <input
-    bind:value={question}
-    placeholder="Question"
-    class="w-full p-2 border mb-2 rounded"
-  />
-
-  <input
-    bind:value={correct}
-    placeholder="Correct Answer"
-    class="w-full p-2 border mb-2 rounded"
-  />
-
-  {#each wrongs as wrong, i}
+  <div class="space-y-4">
     <input
-      bind:value={wrongs[i]}
-      placeholder="Wrong Answer"
-      class="w-full p-2 border mb-2 rounded"
+      bind:value={question}
+      placeholder="Enter the quiz question..."
+      class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
     />
-  {/each}
 
-  <button
-    on:click={submit}
-    class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-  >
-    Add Card
-  </button>
+    <input
+      bind:value={correct}
+      placeholder="Correct answer"
+      class="w-full p-3 border border-green-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-300"
+    />
+
+    {#each wrongs as wrong, i}
+      <input
+        bind:value={wrongs[i]}
+        placeholder="Wrong answer"
+        class="w-full p-3 border border-red-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200"
+      />
+    {/each}
+
+    <button
+      on:click={submit}
+      class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
+    >
+      ➕ Add Flashcard
+    </button>
+  </div>
 </div>
